@@ -16,21 +16,38 @@
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Casa</th>
-            <th scope="col">Opciones</th>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Casa</th>
+            <th class="text-right">Opciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+          <tr *ngFor="let key of heroes | keys; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{heroes[key].nombre}}</td>
+            <td>{{heroes[key].casa}}</td>
+            <td class="text-right">
+                <button [routerLink]="['/heroe', key]"
+                        type="button" class="btn btn-primary">
+                        Editar
+                </button>
+                <button (click)="borrarHeroe(key)"
+                        type="button" class="btn btn-danger">
+                        Eliminar
+                </button>
+            </td>
           </tr>
         </tbody>
       </table>
+      <div *ngIf="(heroes | keys).length === 0 && !loading"
+            class="alert alert-info" role="alert" >
+        <strong>No hay </strong>registros que mostrar.
+      </div>
+      <div *ngIf="loading"
+            class="alert alert-warning" role="alert" >
+        Cargando, por favor espere.
+      </div>
     </div>
   </div>
 </div>
